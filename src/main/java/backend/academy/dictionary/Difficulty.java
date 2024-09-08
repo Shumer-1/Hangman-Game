@@ -1,4 +1,4 @@
-package backend.academy.dictionaries;
+package backend.academy.dictionary;
 
 /**
  * Сложность игровой сессии.
