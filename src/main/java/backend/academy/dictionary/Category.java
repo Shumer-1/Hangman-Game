@@ -1,12 +1,24 @@
 package backend.academy.dictionary;
 
-/**
- * Категории слов для игровой сессии.
- */
+import java.util.Arrays;
+
 public enum Category {
-    TOWNS,
-    ANIMALS,
-    NAMES,
-    COUNTRIES,
-    FRUITS,
+    TOWNS(0),
+    ANIMALS(1),
+    NAMES(2),
+    COUNTRIES(3),
+    FRUITS(4);
+
+    private final int number;
+
+    Category(int number) {
+        this.number = number;
+    }
+
+    public static Category getByNumber(int number) {
+        return Arrays.stream(values())
+            .filter(it -> it.number == number)
+            .findFirst().orElseThrow(() -> new IllegalArgumentException("Wrong number of category"));
+    }
+
 }

@@ -1,10 +1,23 @@
 package backend.academy.dictionary;
 
+import java.util.Arrays;
+
 /**
  * Сложность игровой сессии.
  */
 public enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD
+    EASY(0),
+    MEDIUM(1),
+    HARD(2);
+
+    private final int number;
+
+    Difficulty(int number){
+        this.number = number;
+    }
+    public static Difficulty getByNumber(int number) {
+        return Arrays.stream(values())
+            .filter(it -> it.number == number)
+            .findFirst().orElseThrow(() -> new IllegalArgumentException("Wrong number of difficulty"));
+    }
 }
