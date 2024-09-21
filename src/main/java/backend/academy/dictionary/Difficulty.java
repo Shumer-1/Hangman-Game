@@ -2,9 +2,6 @@ package backend.academy.dictionary;
 
 import java.util.Arrays;
 
-/**
- * Сложность игровой сессии.
- */
 public enum Difficulty {
     EASY(0),
     MEDIUM(1),
@@ -12,9 +9,10 @@ public enum Difficulty {
 
     private final int number;
 
-    Difficulty(int number){
+    Difficulty(int number) {
         this.number = number;
     }
+
     public static Difficulty getByNumber(int number) {
         return Arrays.stream(values())
             .filter(it -> it.number == number)
