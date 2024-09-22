@@ -37,6 +37,7 @@ class DictionaryTest {
         Dictionary dictionary = new Dictionary(MOCK_DATA_EXTRACTOR);
 
         String actualWord = dictionary.getRandomWord(category, difficulty).word();
+
         assertThat(actualWord).isEqualTo(expectedWord);
     }
 
