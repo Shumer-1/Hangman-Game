@@ -17,7 +17,7 @@ public class InputReader {
 
     public Category getCategory() {
         Category category;
-        category = switch (scanner.nextLine()) {
+        category = switch (scanner.nextLine().toLowerCase()) {
             case "animals" -> Category.ANIMALS;
             case "towns" -> Category.TOWNS;
             case "countries" -> Category.COUNTRIES;
@@ -30,7 +30,7 @@ public class InputReader {
 
     public Difficulty getDifficulty() {
         Difficulty difficulty;
-        difficulty = switch (scanner.nextLine()) {
+        difficulty = switch (scanner.nextLine().toLowerCase()) {
             case "easy" -> Difficulty.EASY;
             case "medium" -> Difficulty.MEDIUM;
             case "hard" -> Difficulty.HARD;
@@ -40,8 +40,8 @@ public class InputReader {
     }
 
     public String getGameInput() throws WrongInputValueException {
-        String inputValue = scanner.nextLine();
-        if ((inputValue.length() == 1 && Pattern.matches("[a-zA-Z]", inputValue))
+        String inputValue = scanner.nextLine().toLowerCase();
+        if ((inputValue.length() == 1 && Pattern.matches("[a-z]", inputValue))
             || (inputValue.equals("give me clue"))) {
             return inputValue;
         }
