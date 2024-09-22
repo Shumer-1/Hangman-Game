@@ -4,7 +4,11 @@ import java.util.Random;
 
 public class RandomTaker {
 
-    private final Random random = new Random();
+    private final Random random;
+
+    public RandomTaker(Random random) {
+        this.random = random;
+    }
 
     public Category takeRandomCategory() {
         int randomValue = random.nextInt(Category.values().length);
