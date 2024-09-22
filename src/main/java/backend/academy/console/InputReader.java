@@ -39,11 +39,13 @@ public class InputReader {
         return difficulty;
     }
 
-    public String getLetter() throws WrongInputValueException {
+    public String getGameInput() throws WrongInputValueException {
         String inputValue = scanner.nextLine();
-        if (inputValue.length() == 1 && Pattern.matches("[a-zA-Z]", inputValue)) {
+        if ((inputValue.length() == 1 && Pattern.matches("[a-zA-Z]", inputValue))
+            || (inputValue.equals("give me clue"))) {
             return inputValue;
         }
-        throw new WrongInputValueException("Input value must be letter");
+
+        throw new WrongInputValueException("Input value must be letter or 'give me clue'");
     }
 }
