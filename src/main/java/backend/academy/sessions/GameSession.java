@@ -64,6 +64,7 @@ public class GameSession {
         playGame(kit);
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     private void playGame(Kit kit) {
         guessedWord = new StringBuilder(Stream.generate(() -> "_")
             .limit(kit.word().length())
@@ -80,6 +81,8 @@ public class GameSession {
             default -> mistakesNumberForEasy;
         };
 
+        consoleWriter.printMessage("You have " + maxMistakesNumber);
+
         while (currentMistakes < maxMistakesNumber) {
             try {
                 var userInput = inputReader.getGameInput();
@@ -87,12 +90,14 @@ public class GameSession {
                     boolean result = GameLogicUtil.gameStep(userInput, kit.word(), guessedWord);
                     if (!result) {
                         currentMistakes++;
+                        renderer.render(currentMistakes);
                     }
                 } else if (userInput.equals("give me clue")) {
                     consoleWriter.printMessage(kit.clue() + ".\n");
                 }
+                consoleWriter.printMessage("You have " + (maxMistakesNumber - currentMistakes) + " tries");
                 consoleWriter.printWordCurrentState(guessedWord);
-                renderer.render(currentMistakes);
+
             } catch (WrongInputValueException e) {
                 consoleWriter.printMessage("Please enter a letter");
             }
