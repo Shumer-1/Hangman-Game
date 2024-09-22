@@ -43,4 +43,18 @@ public class ConsoleWriter {
             part of the gallows and a gallows figurine are visualized.
             """);
     }
+
+    public void printStartGameInfo() {
+        printer.println("""
+             Enter letters one at a time.\s
+             If a letter appears in a word,\s
+             it will appear in all the necessary positions,\s
+             otherwise the attempt will be wasted. When the entire\s
+             gallows is built, you will lose.
+            \s""");
+    }
+
+    public void printWordCurrentState(StringBuilder guessedWord) {
+        printer.println(guessedWord);
+    }
 }
