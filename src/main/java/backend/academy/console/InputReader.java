@@ -4,16 +4,16 @@ import backend.academy.dictionary.Category;
 import backend.academy.dictionary.Difficulty;
 import backend.academy.dictionary.RandomTaker;
 import backend.academy.exceptions.WrongInputValueException;
-import java.io.InputStream;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class InputReader {
     private final Scanner scanner;
+    private final RandomTaker randomTaker;
 
-    public InputReader(InputStream inputStream) {
-        scanner = new Scanner(inputStream);
+    public InputReader(Scanner scanner, RandomTaker randomTaker) {
+        this.scanner = scanner;
+        this.randomTaker = randomTaker;
     }
 
     public Category getCategory() {
@@ -24,7 +24,7 @@ public class InputReader {
             case "countries" -> Category.COUNTRIES;
             case "fruits" -> Category.FRUITS;
             case "names" -> Category.NAMES;
-            default -> new RandomTaker(new Random()).takeRandomCategory();
+            default -> randomTaker.takeRandomCategory();
         };
         return category;
     }
@@ -35,7 +35,7 @@ public class InputReader {
             case "easy" -> Difficulty.EASY;
             case "medium" -> Difficulty.MEDIUM;
             case "hard" -> Difficulty.HARD;
-            default -> new RandomTaker(new Random()).takeRandomDifficulty();
+            default -> randomTaker.takeRandomDifficulty();
         };
         return difficulty;
     }
@@ -48,5 +48,9 @@ public class InputReader {
         }
 
         throw new WrongInputValueException("Input value must be letter or 'give me clue'");
+    }
+
+    public String getUserAnswer() {
+        return scanner.nextLine().toLowerCase();
     }
 }
