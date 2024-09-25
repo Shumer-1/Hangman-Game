@@ -26,7 +26,7 @@ public class Dictionary {
             throw new MissingDataException("File hasn't words with this difficulty");
         }
 
-        var random = new Random();
+        var random = new Random(System.currentTimeMillis());
         int randomValue = random.nextInt(DICTIONARY.get(category).get(difficulty).size());
 
         return DICTIONARY.get(category).get(difficulty).get(randomValue);
