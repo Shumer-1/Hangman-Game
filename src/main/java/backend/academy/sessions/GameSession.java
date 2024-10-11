@@ -26,10 +26,11 @@ public class GameSession {
     private Difficulty gameDifficulty;
     private HangmanRenderer renderer;
     private String word;
-    private final int mistakesNumberForHard = 8;
-    private final int mistakesNumberForMedium = 6;
-    private final int mistakesNumberForEasy = 3;
     @Getter private int currentMistakes;
+    private static String stringEnd = ".\n";
+    private static String messageString = "You have ";
+    private static String consentString = "yes";
+    private static String failureString = "no";
 
     private StringBuilder guessedWord;
 
@@ -39,17 +40,17 @@ public class GameSession {
         this.dictionary = dictionary;
     }
 
-    @SuppressWarnings("MultipleStringLiterals")
     public void startSession() {
         consoleWriter.printRuleInfo();
 
         consoleWriter.printCategoryInfo();
         wordCategory = inputReader.getCategory();
-        consoleWriter.printMessage("Category is " + wordCategory.toString().toLowerCase() + ".\n");
+
+        consoleWriter.printMessage("Category is " + wordCategory.toString().toLowerCase() + stringEnd);
 
         consoleWriter.printDifficultyInfo();
         gameDifficulty = inputReader.getDifficulty();
-        consoleWriter.printMessage("Difficulty is " + gameDifficulty.toString().toLowerCase() + ".\n");
+        consoleWriter.printMessage("Difficulty is " + gameDifficulty.toString().toLowerCase() + stringEnd);
 
         renderer = switch (gameDifficulty) {
             case HARD -> new HardModeHangmanRenderer(System.out);
@@ -68,7 +69,6 @@ public class GameSession {
         playGame(kit);
     }
 
-    @SuppressWarnings("MultipleStringLiterals")
     private void playGame(Kit kit) {
         guessedWord = new StringBuilder(Stream.generate(() -> "_")
             .limit(kit.word().length())
@@ -79,27 +79,22 @@ public class GameSession {
         consoleWriter.printWordCurrentState(guessedWord);
 
         currentMistakes = 0;
-        int maxMistakesNumber = switch (gameDifficulty) {
-            case HARD -> mistakesNumberForHard;
-            case MEDIUM -> mistakesNumberForMedium;
-            default -> mistakesNumberForEasy;
-        };
-
-        consoleWriter.printMessage("You have " + maxMistakesNumber);
+        int maxMistakesNumber = gameDifficulty.mistakesNumber;
+        consoleWriter.printMessage(messageString + maxMistakesNumber);
 
         while (currentMistakes < maxMistakesNumber) {
             try {
                 var userInput = inputReader.getGameInput();
                 if (userInput.length() == 1) {
-                    boolean result = GameLogicUtil.gameStep(userInput, kit.word(), guessedWord);
+                    boolean result = GameLogicUtil.guessLetter(userInput, kit.word(), guessedWord);
                     if (!result) {
                         currentMistakes++;
                         renderer.render(currentMistakes);
                     }
                 } else if (userInput.equals("give me clue")) {
-                    consoleWriter.printMessage(kit.clue() + ".\n");
+                    consoleWriter.printMessage(kit.clue() + stringEnd);
                 }
-                consoleWriter.printMessage("You have " + (maxMistakesNumber - currentMistakes) + " tries");
+                consoleWriter.printMessage(messageString + (maxMistakesNumber - currentMistakes) + " tries");
                 consoleWriter.printWordCurrentState(guessedWord);
                 if (guessedWord.indexOf("_") == -1) {
                     break;
@@ -113,7 +108,6 @@ public class GameSession {
 
     }
 
-    @SuppressWarnings("MultipleStringLiterals")
     private void endGame(boolean isWin) {
         if (isWin) {
             consoleWriter.printMessage("You win!!!");
@@ -123,11 +117,11 @@ public class GameSession {
         }
         consoleWriter.printMessage("Shall you play again? Yes/No");
         String isAgain = inputReader.getUserAnswer();
-        while (!isAgain.equals("yes") && !isAgain.equals("no")) {
+        while (!isAgain.equals(consentString) && !isAgain.equals(failureString)) {
             consoleWriter.printMessage("Please write 'Yes' or 'No'");
             isAgain = inputReader.getUserAnswer();
         }
-        if (isAgain.equals("yes")) {
+        if (isAgain.equals(consentString)) {
             startSession();
         }
     }
