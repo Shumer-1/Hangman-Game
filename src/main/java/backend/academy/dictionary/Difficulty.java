@@ -1,21 +1,18 @@
 package backend.academy.dictionary;
 
-import java.util.Arrays;
-
 public enum Difficulty {
-    EASY(0),
-    MEDIUM(1),
-    HARD(2);
+    EASY(3),
+    MEDIUM(6),
+    HARD(8);
 
-    private final int number;
+    public final int mistakesNumber;
+    private static final Difficulty[] CACHED_VALUES = Difficulty.values();
 
-    Difficulty(int number) {
-        this.number = number;
+    Difficulty(int mistakesNumber) {
+        this.mistakesNumber = mistakesNumber;
     }
 
     public static Difficulty getByNumber(int number) {
-        return Arrays.stream(values())
-            .filter(it -> it.number == number)
-            .findFirst().orElseThrow(() -> new IllegalArgumentException("Wrong number of difficulty"));
+        return CACHED_VALUES[number];
     }
 }
