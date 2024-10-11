@@ -18,25 +18,21 @@ public class InputReader {
 
     public Category getCategory() {
         Category category;
-        category = switch (scanner.nextLine().toLowerCase()) {
-            case "animals" -> Category.ANIMALS;
-            case "towns" -> Category.TOWNS;
-            case "countries" -> Category.COUNTRIES;
-            case "fruits" -> Category.FRUITS;
-            case "names" -> Category.NAMES;
-            default -> randomTaker.takeRandomCategory();
-        };
+        try {
+            category = Category.valueOf(scanner.nextLine().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            category = randomTaker.takeRandomCategory();
+        }
         return category;
     }
 
     public Difficulty getDifficulty() {
         Difficulty difficulty;
-        difficulty = switch (scanner.nextLine().toLowerCase()) {
-            case "easy" -> Difficulty.EASY;
-            case "medium" -> Difficulty.MEDIUM;
-            case "hard" -> Difficulty.HARD;
-            default -> randomTaker.takeRandomDifficulty();
-        };
+        try {
+            difficulty = Difficulty.valueOf(scanner.nextLine().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            difficulty = randomTaker.takeRandomDifficulty();
+        }
         return difficulty;
     }
 
