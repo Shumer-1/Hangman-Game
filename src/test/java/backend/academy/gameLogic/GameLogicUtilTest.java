@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class GameLogicUtilTest {
 
     @ParameterizedTest
-    @MethodSource("getArgumentsForGameStepTest")
-    void gameStepTest(String letter, String gameWord, StringBuilder guessedWord, boolean expectedResult, String expectedWord){
-        boolean actualResult = GameLogicUtil.gameStep(letter, gameWord, guessedWord);
+    @MethodSource("getArgumentsForGuessLetterTest")
+    void guessLetterTest(String letter, String gameWord, StringBuilder guessedWord, boolean expectedResult, String expectedWord){
+        boolean actualResult = GameLogicUtil.guessLetter(letter, gameWord, guessedWord);
 
         assertAll(
             () -> assertThat(actualResult).isEqualTo(expectedResult),
@@ -20,7 +20,7 @@ public class GameLogicUtilTest {
         );
     }
 
-    private static Stream<Arguments> getArgumentsForGameStepTest(){
+    private static Stream<Arguments> getArgumentsForGuessLetterTest(){
         return Stream.of(
             Arguments.of("a", "arguments", new StringBuilder("_________"), true, "a________"),
             Arguments.of("b", "arguments", new StringBuilder("_________"), false, "_________"),

@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class GameLogicUtil {
 
-    public static boolean gameStep(String letter, String gameWord, StringBuilder guessedWord) {
+    public static boolean guessLetter(String letter, String gameWord, StringBuilder guessedWord) {
         boolean flag = false;
         for (int i = 0; i < gameWord.length(); i++) {
             if (gameWord.charAt(i) == letter.charAt(0)) {
