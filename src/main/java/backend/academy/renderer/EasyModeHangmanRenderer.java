@@ -2,54 +2,18 @@ package backend.academy.renderer;
 
 import java.io.PrintStream;
 
-public class EasyModeHangmanRenderer implements HangmanRenderer {
+public class EasyModeHangmanRenderer extends HangmanRenderer {
 
     private final PrintStream printer;
+    private final String[] stepValues;
 
     public EasyModeHangmanRenderer(PrintStream printStream) {
         printer = printStream;
+        stepValues = new String[] {thirdStepPicture, fifthStepPicture, seventhStepPicture, ninthStepPicture};
     }
 
-    String startPicture = """
-         _ _ _ _
-         |     |
-         |
-         |
-         |
-        """;
-
-    String firstStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |
-         |
-        """;
-
-    String secondStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |
-         |    / \\
-        """;
-
-    String finalPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |    -|-
-         |    / \\
-        """;
-
     @Override
-    @SuppressWarnings("MagicNumber")
     public void render(int step) {
-        printer.println(switch (step) {
-            case 0 -> startPicture;
-            case 1 -> firstStepPicture;
-            case 2 -> secondStepPicture;
-            default -> finalPicture;
-        });
+        printer.println(stepValues[step]);
     }
 }

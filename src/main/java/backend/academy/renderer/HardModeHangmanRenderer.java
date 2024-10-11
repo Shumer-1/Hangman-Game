@@ -2,99 +2,18 @@ package backend.academy.renderer;
 
 import java.io.PrintStream;
 
-public class HardModeHangmanRenderer implements HangmanRenderer {
-
+public class HardModeHangmanRenderer extends HangmanRenderer {
     private final PrintStream printer;
+    private final String[] stepValues;
 
     public HardModeHangmanRenderer(PrintStream printStream) {
         printer = printStream;
+        stepValues = new String[] {firstStepPicture, secondStepPicture, thirdStepPicture, fourthStepPicture,
+            fifthStepPicture, sixthStepPicture, seventhStepPicture, eighthStepPicture, ninthStepPicture};
     }
 
-    String startPicture = """
-         _
-         |
-         |
-         |
-         |
-        """;
-
-    String firstStepPicture = """
-         _ _ _ _
-         |
-         |
-         |
-         |
-        """;
-
-    String secondStepPicture = """
-         _ _ _ _
-         |     |
-         |
-         |
-         |
-        """;
-
-    String thirdStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |
-         |
-        """;
-
-    String fourthStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |
-         |
-        """;
-
-    String fifthStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |
-         |    /
-        """;
-
-    String sixthStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |
-         |    / \\
-        """;
-
-    String seventhStepPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |     |-
-         |    / \\
-        """;
-
-    String finalPicture = """
-         _ _ _ _
-         |     |
-         |     O
-         |    -|-
-         |    / \\
-        """;
-
     @Override
-    @SuppressWarnings("MagicNumber")
     public void render(int step) {
-        printer.println(switch (step) {
-            case 0 -> startPicture;
-            case 1 -> firstStepPicture;
-            case 2 -> secondStepPicture;
-            case 3 -> thirdStepPicture;
-            case 4 -> fourthStepPicture;
-            case 5 -> fifthStepPicture;
-            case 6 -> sixthStepPicture;
-            case 7 -> seventhStepPicture;
-            default -> finalPicture;
-        });
+        printer.println(stepValues[step]);
     }
 }
